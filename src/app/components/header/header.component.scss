@@ -1,0 +1,21 @@
+.header {
+  border: 3px solid white;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  border-radius: 20px;
+
+  &__logo {
+    width: 40px;
+    height: 40px;
+  }
+  &__user {
+    display: flex;
+    align-items: center;
+    &__name {
+      margin-left: 10px;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<footer class="footer">
+  <p class="footer__title">© All Rights Reserved</p>
+  <nav class="footer__navigation">
+    <ng-container *ngFor="let item of pages">
+      <div
+        class="footer__navigation__page"
+        [ngClass]="{
+          'footer__navigation__selected-page': item.active
+        }"
+      >
+        {{ item.label }} /
+      </div>
+    </ng-container>
+  </nav>
+</footer>

@@ -1,0 +1,15 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  text-align: center;
+  color: rgb(166, 164, 164);
+
+  &__navigation {
+    display: flex;
+    &__selected-page {
+      color: white;
+    }
+  }
+}

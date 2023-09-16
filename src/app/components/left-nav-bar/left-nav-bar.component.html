@@ -1,0 +1,11 @@
+<nav class="navigation">
+  <ng-container *ngFor="let item of pages; let i = index">
+    <div
+      class="navigation__page"
+      [ngClass]="{ 'navigation__selected-page': item.active }"
+      (click)="setActivePage(item)"
+    >
+      {{ item.label }}
+    </div>
+  </ng-container>
+</nav>

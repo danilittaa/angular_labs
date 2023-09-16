@@ -1,0 +1,17 @@
+.navigation {
+  border: 3px solid white;
+  border-top: 0;
+  width: 250px;
+  height: calc(100vh - 65px);
+  border-radius: 20px;
+
+  &__page {
+    padding: 10px 15px;
+    margin-bottom: 3px;
+  }
+  &__selected-page {
+    background-color: rgb(236, 236, 236);
+    color: black;
+    border-radius: 20px;
+  }
+}

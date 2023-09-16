@@ -1,0 +1,10 @@
+.app {
+  &__main-wrapper {
+    background-color: black;
+    color: white;
+    height: 100vh;
+  }
+  &__content-wrapper {
+    display: flex;
+  }
+}
