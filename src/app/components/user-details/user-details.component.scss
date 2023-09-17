@@ -1,0 +1,12 @@
+.user-details {
+  &__container {
+    border: 3px solid white;
+    width: 300px;
+    padding: 10px 15px;
+    font-size: 20px;
+  }
+  &__prop {
+    display: flex;
+    justify-content: space-between;
+  }
+}

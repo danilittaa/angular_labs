@@ -17,4 +17,7 @@ export class FooterComponent {
       this.pages = pages;
     });
   }
+  setActivePage(page: Page) {
+    this.navigationService.setCurrentPage(page);
+  }
 }

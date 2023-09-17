@@ -7,6 +7,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { LeftNavBarComponent } from './components/left-nav-bar/left-nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FirstPageComponent } from './pages/first-page/first-page.component';
+import { UsersComponent } from './pages/users/users.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { RoundHoursPipe } from './pipes/round-hours.pipe';
 
 @NgModule({
   declarations: [
@@ -14,7 +18,11 @@ import { FirstPageComponent } from './pages/first-page/first-page.component';
     HeaderComponent,
     LeftNavBarComponent,
     FooterComponent,
-    FirstPageComponent
+    FirstPageComponent,
+    UsersComponent,
+    NotFoundComponent,
+    UserDetailsComponent,
+    RoundHoursPipe
   ],
   imports: [
     BrowserModule,

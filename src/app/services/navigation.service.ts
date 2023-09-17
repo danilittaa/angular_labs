@@ -8,8 +8,7 @@ import { Page } from '../types/types';
 export class NavigationService {
   private pages = [
     { label: 'first page', active: true },
-    { label: 'second page', active: false },
-    { label: 'third page', active: false },
+    { label: 'users', active: false },
   ];
   private currentPage = new BehaviorSubject<Page[]>(this.pages);
 
@@ -26,5 +25,11 @@ export class NavigationService {
     });
 
     this.currentPage.next(this.pages);
+  }
+
+  resetPages() {
+    this.pages.forEach((p) => {
+      p.active = false;
+    });
   }
 }

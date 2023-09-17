@@ -4,9 +4,9 @@
     <ng-container *ngFor="let item of pages">
       <div
         class="footer__navigation__page"
-        [ngClass]="{
-          'footer__navigation__selected-page': item.active
-        }"
+        (click)="setActivePage(item)"
+        [routerLink]="['/', item.label.toLowerCase().replace(' ', '-')]"
+        routerLinkActive="footer__navigation__selected-page"
       >
         {{ item.label }} /
       </div>

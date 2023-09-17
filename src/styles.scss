@@ -9,3 +9,12 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: calc(100vw - 250px);
+}

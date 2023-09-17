@@ -1,13 +1,14 @@
 .footer {
   position: absolute;
   bottom: 0;
-  left: 50%;
+  left: calc(50% + 180px);
   transform: translate(-50%, 0);
   text-align: center;
   color: rgb(166, 164, 164);
 
   &__navigation {
     display: flex;
+    cursor: pointer;
     &__selected-page {
       color: white;
     }

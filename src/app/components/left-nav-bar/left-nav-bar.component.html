@@ -1,9 +1,10 @@
 <nav class="navigation">
-  <ng-container *ngFor="let item of pages; let i = index">
+  <ng-container *ngFor="let item of pages">
     <div
       class="navigation__page"
-      [ngClass]="{ 'navigation__selected-page': item.active }"
       (click)="setActivePage(item)"
+      [routerLink]="['/', item.label.toLowerCase().replace(' ', '-')]"
+      routerLinkActive="navigation__selected-page"
     >
       {{ item.label }}
     </div>

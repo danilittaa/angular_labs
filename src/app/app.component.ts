@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DATA_TYPE } from './enums/enums';
 import { Data } from './types/types';
+import { FakeDataService } from './services/fake-data.service';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,8 @@ export class AppComponent {
   userName = 'New User';
   helloWorld = 'Привіт, світ!';
   enumValue = DATA_TYPE;
+
+  constructor(private fakeDataService: FakeDataService) {}
 
   fakeData: Data[] = [
     {
@@ -64,4 +67,9 @@ export class AppComponent {
       isVisible: true,
     },
   ];
+
+  ngOnInit() {
+    this.fakeDataService.setFakeData(this.fakeData);
+    this.fakeDataService.setTitle(this.helloWorld);
+  }
 }

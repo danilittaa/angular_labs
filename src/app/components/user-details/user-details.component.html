@@ -1,0 +1,20 @@
+<main>
+  <div class="user-details__container" *ngIf="user">
+    <div class="user-details__prop">
+      <p>Name:</p>
+      <p>{{ user.name + " " + user.lastname }}</p>
+    </div>
+    <div class="user-details__prop">
+      <p>Date of b-day:</p>
+      <p>{{ user.dateOfBirth | date : "MM/dd/yy" }}</p>
+    </div>
+    <div class="user-details__prop">
+      <p>Salary:</p>
+      <p>{{ user.salary | currency : "UAH" : "symbol" : "1.0-0" }}</p>
+    </div>
+    <div class="user-details__prop">
+      <p>Working hours:</p>
+      <p>{{ user.workingHours | roundHours }}</p>
+    </div>
+  </div>
+</main>

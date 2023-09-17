@@ -1,0 +1,5 @@
+<main>
+  <p *ngFor="let user of users" [routerLink]="['/users', user.id]" class="link">
+    {{ user.name + " " + user.lastname }}
+  </p>
+</main>

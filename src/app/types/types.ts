@@ -13,4 +13,13 @@ type Page = {
   active: boolean;
 };
 
-export { type Data, type Page };
+type User = {
+  id: number;
+  name: string;
+  lastname: string;
+  dateOfBirth: Date;
+  salary: number;
+  workingHours: number;
+};
+
+export { type Data, type Page, type User };

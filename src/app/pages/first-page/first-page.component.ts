@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DATA_TYPE } from 'src/app/enums/enums';
+import { FakeDataService } from 'src/app/services/fake-data.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Data } from 'src/app/types/types';
 
@@ -10,11 +11,13 @@ import { Data } from 'src/app/types/types';
 })
 export class FirstPageComponent {
   isListView: boolean = true;
-  constructor(private sharedService: SharedService) {}
-
-  @Input() title: string = '';
-  @Input() data: Data[] = [];
-  @Input() enumValue: typeof DATA_TYPE = DATA_TYPE;
+  data: Data[] | null = null;
+  title: string = '';
+  enumValue: any = DATA_TYPE;
+  constructor(
+    private sharedService: SharedService,
+    private fakeDataService: FakeDataService
+  ) {}
 
   isContentVisible() {
     return this.sharedService.isMessageVisible();
@@ -26,5 +29,16 @@ export class FirstPageComponent {
 
   toggleContentVisibility(item: Data) {
     item.isVisible = !item.isVisible;
+  }
+
+  ngOnInit() {
+    this.fakeDataService.data$.subscribe((data) => {
+      this.data = data;
+    });
+    this.fakeDataService.title$.subscribe((title) => {
+      this.title = title;
+      console.log('title1', title);
+      console.log('title2', this.title);
+    });
   }
 }

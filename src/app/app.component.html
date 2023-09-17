@@ -3,11 +3,7 @@
 
   <div class="app__content-wrapper">
     <app-left-nav-bar></app-left-nav-bar>
-    <app-first-page
-      [title]="helloWorld"
-      [enumValue]="enumValue"
-      [data]="fakeData"
-    ></app-first-page>
+    <router-outlet></router-outlet>
   </div>
 
   <app-footer></app-footer>
