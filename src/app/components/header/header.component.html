@@ -6,11 +6,7 @@
     class="header__logo"
   />
   <div class="header__user">
-    <img
-      src="assets/images/avatar.png"
-      alt="avatar"
-      class="header__user__avatar"
-    />
+    <div class="header__user__avatar" [appAvatar]="role"></div>
     <p class="header__user__name">{{ userName }}</p>
   </div>
 </header>

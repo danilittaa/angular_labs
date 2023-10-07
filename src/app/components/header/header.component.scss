@@ -17,5 +17,14 @@
     &__name {
       margin-left: 10px;
     }
+    &__avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RoleService } from 'src/app/services/role.service';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { User } from 'src/app/types/types';
 
@@ -9,12 +10,19 @@ import { User } from 'src/app/types/types';
 })
 export class UsersComponent {
   users: User[] = [];
+  role = '';
 
-  constructor(private userDataService: UserDataService) {}
+  constructor(
+    private userDataService: UserDataService,
+    private roleService: RoleService
+  ) {}
 
   ngOnInit() {
-    return this.userDataService.getUsers().subscribe((users) => {
+    this.userDataService.getUsers().subscribe((users) => {
       this.users = users as User[];
+    });
+    this.roleService.getRole().subscribe((role) => {
+      this.role = role;
     });
   }
 }

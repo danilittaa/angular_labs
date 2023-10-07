@@ -1,8 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { DATA_TYPE } from 'src/app/enums/enums';
-import { FakeDataService } from 'src/app/services/fake-data.service';
-import { SharedService } from 'src/app/services/shared.service';
-import { Data } from 'src/app/types/types';
+import { Component } from '@angular/core';
+import { ROLES } from 'src/app/enums/enums';
+import { RoleService } from 'src/app/services/role.service';
 
 @Component({
   selector: 'app-first-page',
@@ -10,35 +8,17 @@ import { Data } from 'src/app/types/types';
   styleUrls: ['./first-page.component.scss'],
 })
 export class FirstPageComponent {
-  isListView: boolean = true;
-  data: Data[] | null = null;
-  title: string = '';
-  enumValue: any = DATA_TYPE;
-  constructor(
-    private sharedService: SharedService,
-    private fakeDataService: FakeDataService
-  ) {}
+  roles = Object.values(ROLES);
+  role = '';
+  constructor(private roleService: RoleService) {}
 
-  isContentVisible() {
-    return this.sharedService.isMessageVisible();
-  }
-
-  changeListOrGrid() {
-    this.isListView = !this.isListView;
-  }
-
-  toggleContentVisibility(item: Data) {
-    item.isVisible = !item.isVisible;
+  changeRole(role: ROLES) {
+    this.roleService.setRole(role);
   }
 
   ngOnInit() {
-    this.fakeDataService.data$.subscribe((data) => {
-      this.data = data;
-    });
-    this.fakeDataService.title$.subscribe((title) => {
-      this.title = title;
-      console.log('title1', title);
-      console.log('title2', this.title);
+    this.roleService.getRole().subscribe((role) => {
+      this.role = role;
     });
   }
 }

@@ -1,6 +1,13 @@
 .first-page {
-  &__title {
-    color: red;
-    font-size: 36px;
+  div {
+    margin: 5px 0;
+    cursor: pointer;
+
+    &:not(.selected):hover {
+      color: rgb(167, 164, 164);
+    }
+  }
+  .selected {
+    color: rgb(239, 113, 113);
   }
 }

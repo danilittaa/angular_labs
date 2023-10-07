@@ -11,6 +11,8 @@ import { UsersComponent } from './pages/users/users.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { RoundHoursPipe } from './pipes/round-hours.pipe';
+import { AvatarDirective } from './directives/avatar.directive';
+import { WelcomeDirective } from './directives/welcome.directive';
 
 @NgModule({
   declarations: [
@@ -22,13 +24,12 @@ import { RoundHoursPipe } from './pipes/round-hours.pipe';
     UsersComponent,
     NotFoundComponent,
     UserDetailsComponent,
-    RoundHoursPipe
+    RoundHoursPipe,
+    AvatarDirective,
+    WelcomeDirective,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
