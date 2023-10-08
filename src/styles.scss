@@ -24,3 +24,18 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.success-snackbar {
+  color: black;
+  --mdc-snackbar-container-color: green;
+  --mat-mdc-snack-bar-button-color: white;
+}
+
+.error-snackbar {
+  max-width: max-content !important;
+  color: white;
+  --mdc-snackbar-container-color: red;
+  border-color: #f5c6cb;
+
+  --mat-mdc-snack-bar-button-color: red;
+}

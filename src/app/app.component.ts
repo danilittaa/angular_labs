@@ -8,6 +8,8 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { NotificationService } from './services/notification.service';
+import { UserService } from './services/user.service';
 
 interface User {
   id: string;
@@ -54,13 +56,16 @@ export class AppComponent {
   }
   //#endregion
 
-  users: User[] = [];
   usersForm = new FormGroup({
     users: new FormArray([this.getUserFields()]),
   });
   isSmallScreen: boolean = false;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private notificationsService: NotificationService,
+    private userService: UserService
+  ) {
     this.breakpointObserver
       .observe([Breakpoints.XSmall])
       .subscribe((result) => {
@@ -130,7 +135,20 @@ export class AppComponent {
     this.getUsers().push(this.getUserFields());
   }
 
-  deleteUser(index: number) {
+  deleteUser(index: number): void {
+    const userId = this.getUsers().at(index).get('id')?.value;
+    if (userId) {
+      this.userService.deleteUser(userId).subscribe(
+        () => {
+          this.notificationsService.showSuccess('Користувача успішно видалено');
+        },
+        (error) => {
+          this.notificationsService.showError(
+            'Помилка при видаленні користувача'
+          );
+        }
+      );
+    }
     this.getUsers().removeAt(index);
   }
 
@@ -150,19 +168,45 @@ export class AppComponent {
   deleteSubject(userIndex: number, subjectIndex: number) {
     this.getSubjectArray(userIndex).removeAt(subjectIndex);
   }
-  onSubmit() {
-    this.usersForm.value.users?.forEach((user, index) => {
-      const existingUser = this.users.find((u) => u.id === user.id);
-      if (!existingUser) {
-        if (!user.id) {
-          user.id = this.generateUniqueId();
-        }
-        const userFormGroup = this.getUsers().at(index) as FormGroup;
-        userFormGroup.patchValue(user);
-        this.users.push(user as User);
-      }
-    });
 
-    console.log('users', this.users);
+  onSubmit() {
+    this.userService.getUsers().subscribe((existingUsers) => {
+      this.usersForm.value.users?.forEach((user, index) => {
+        const existingUser = existingUsers.find((u) => u.id === user.id);
+        if (!existingUser) {
+          if (!user.id) {
+            user.id = this.generateUniqueId();
+          }
+          const userFormGroup = this.getUsers().at(index) as FormGroup;
+          userFormGroup.patchValue(user);
+          this.userService.createUser(user as User).subscribe(
+            (savedUser) => {
+              this.notificationsService.showSuccess(
+                'Користувачів успішно збережено'
+              );
+            },
+            (error) => {
+              this.notificationsService.showError(
+                'Помилка при збереженні користувачів'
+              );
+            }
+          );
+        } else {
+          this.userService.updateUser(user as User).subscribe(
+            (updatedUser) => {
+              this.notificationsService.showSuccess(
+                'Користувачів успішно оновлено'
+              );
+            },
+            (error) => {
+              this.notificationsService.showError(
+                'Помилка при оновленні користувачів'
+              );
+            }
+          );
+        }
+      });
+      console.log('users', existingUsers);
+    });
   }
 }
