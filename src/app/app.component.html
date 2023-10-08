@@ -1,209 +1,243 @@
 <div class="container">
-  <form [formGroup]="usersForm" (ngSubmit)="onSubmit()">
-    <div formArrayName="users" class="form">
-      <div *ngFor="let user of getUsers().controls; let i = index">
-        <div [formGroupName]="i">
-          <div *ngIf="user.get('id')?.value">
-            <label for="id">ID:</label>
-            <input type="text" id="id" formControlName="id" />
-          </div>
-          <br />
+  <mat-toolbar color="primary" fxLayout="row" fxLayoutGap="20px">
+    <mat-icon [matBadge]="getUsers().length" matBadgeColor="accent"
+      >person</mat-icon
+    >
+    <span>My App</span>
+  </mat-toolbar>
 
-          <label for="name">Ім'я:</label>
-          <input
-            type="text"
-            id="name"
-            formControlName="name"
-            [ngClass]="{
-              'error-input':
-                user.get('name')?.invalid &&
-                (user.get('name')?.touched || user.get('name')?.dirty)
-            }"
-          />
-          <div
-            *ngIf="
-              user.get('name')?.invalid &&
-              (user.get('name')?.touched || user.get('name')?.dirty)
-            "
-            class="error-message"
-          >
-            Ім'я обов'язкове поле
-          </div>
-          <br />
-
-          <label for="lastname">Прізвище:</label>
-          <input
-            type="text"
-            id="lastname"
-            formControlName="lastname"
-            [ngClass]="{
-              'error-input':
-                user.get('lastname')?.invalid &&
-                (user.get('lastname')?.touched || user.get('lastname')?.dirty)
-            }"
-          />
-          <div
-            *ngIf="
-              user.get('lastname')?.invalid &&
-              (user.get('lastname')?.touched || user.get('lastname')?.dirty)
-            "
-            class="error-message"
-          >
-            Прізвище обов'язкове поле
-          </div>
-          <br />
-
-          <label for="type">Тип:</label>
-          <select id="type" formControlName="type">
-            <option value="type A">Тип A</option>
-            <option value="type B">Тип B</option>
-            <option value="type C">Тип C</option>
-          </select>
-          <br />
-
-          <label for="email">Електронна адреса:</label>
-          <input
-            type="email"
-            id="email"
-            formControlName="email"
-            [ngClass]="{
-              'error-input':
-                user.get('email')?.invalid &&
-                (user.get('email')?.touched || user.get('email')?.dirty)
-            }"
-          />
-          <div
-            *ngIf="
-              user.get('email')?.invalid &&
-              (user.get('email')?.touched || user.get('email')?.dirty)
-            "
-            class="error-message"
-          >
-            Пошта обов'язкове поле та має бути в правильному форматі
-          </div>
-          <br />
-
-          <label for="password">Пароль:</label>
-          <input
-            type="password"
-            id="password"
-            formControlName="password"
-            [ngClass]="{
-              'error-input':
-                user.get('password')?.invalid &&
-                (user.get('password')?.touched || user.get('password')?.dirty)
-            }"
-          />
-          <div
-            *ngIf="
-              user.get('password')?.invalid &&
-              (user.get('password')?.touched || user.get('password')?.dirty)
-            "
-            class="error-message"
-          >
-            Пароль обов'язкове поле та має бути в правильному форматі
-          </div>
-          <br />
-
-          <div *ngIf="!user.get('id')?.value">
-            <label for="confirmPassword">Підтвердіть пароль:</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              formControlName="confirmPassword"
-              [ngClass]="{
-                'error-input':
-                  user.get('confirmPassword')?.invalid &&
-                  (user.get('confirmPassword')?.touched ||
-                    user.get('confirmPassword')?.dirty)
-              }"
-            />
+  <nav>
+    <mat-tab-group>
+      <mat-tab label="Users Form">
+        <form
+          [formGroup]="usersForm"
+          (ngSubmit)="onSubmit()"
+          [fxLayout]="isSmallScreen ? 'column' : 'row'"
+          fxLayoutGap="10px"
+        >
+          <div formArrayName="users" fxLayoutGap="30px" fxLayout="column">
             <div
-              *ngIf="
-                user.get('confirmPassword')?.invalid &&
-                (user.get('confirmPassword')?.touched ||
-                  user.get('confirmPassword')?.dirty)
-              "
-              class="error-message"
+              *ngFor="let user of getUsers().controls; let i = index"
+              class="form"
             >
-              Повторний пароль обов'язкове поле, має бути в правильному форматі
-              та співпадати з попереднім полем
-            </div>
-          </div>
-          <br />
-
-          <label for="description">Опис:</label>
-          <textarea id="description" formControlName="description"></textarea>
-
-          <label>Стать:</label>
-          <input type="radio" formControlName="sex" value="MALE" id="male" />
-          <label for="male">Чоловік</label>
-          <input
-            type="radio"
-            formControlName="sex"
-            value="FEMALE"
-            id="female"
-          />
-          <label for="female">Жінка</label>
-          <br />
-
-          <div [formGroup]="getUserSubjects(i)" style="border: 1px solid black">
-            <div formArrayName="subjectsArray">
               <div
-                *ngFor="
-                  let subjects of getSubjectArray(i).controls;
-                  let j = index
-                "
+                [formGroupName]="i"
+                fxLayout="row wrap"
+                fxLayoutGap="30px"
+                [fxLayoutAlign]="isSmallScreen ? 'center center' : ''"
+                style="position: relative"
               >
-                <div [formGroupName]="j">
-                  <label for="subjectInput">Новий предмет:</label>
-                  <input
-                    type="text"
-                    id="subjectInput"
-                    formControlName="subject"
-                  />
-                  <br />
+                <mat-icon class="close-btn" (click)="deleteUser(i)"
+                  >close</mat-icon
+                >
 
-                  <button type="button" (click)="deleteSubject(i, j)">
-                    Видалити предмет
+                <div *ngIf="user.get('id')?.value">
+                  <mat-form-field>
+                    <mat-label>ID:</mat-label>
+                    <input matInput formControlName="id" />
+                  </mat-form-field>
+                </div>
+                <br />
+
+                <mat-form-field>
+                  <mat-label>Ім'я:</mat-label>
+                  <input matInput placeholder="Дана" formControlName="name" />
+                  <mat-error
+                    *ngIf="
+                      user.get('name')?.invalid &&
+                      (user.get('name')?.touched || user.get('name')?.dirty)
+                    "
+                    >Ім'я обов'язкове поле</mat-error
+                  >
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Прізвище:</mat-label>
+                  <input
+                    matInput
+                    placeholder="Тодоряк"
+                    formControlName="lastname"
+                  />
+                  <mat-error
+                    *ngIf="
+                      user.get('lastname')?.invalid &&
+                      (user.get('lastname')?.touched ||
+                        user.get('lastname')?.dirty)
+                    "
+                    >Прізвище обов'язкове поле</mat-error
+                  >
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Тип:</mat-label>
+                  <mat-select formControlName="type">
+                    <mat-option value="type A">Тип A</mat-option>
+                    <mat-option value="type B">Тип B</mat-option>
+                    <mat-option value="type C">Тип C</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Електронна адреса:</mat-label>
+                  <input
+                    matInput
+                    placeholder="todoriak@gmail.com"
+                    formControlName="email"
+                  />
+                  <mat-error
+                    *ngIf="
+                      user.get('email')?.invalid &&
+                      (user.get('email')?.touched || user.get('email')?.dirty)
+                    "
+                  >
+                    Пошта обов'язкове поле та має бути в правильному форматі
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Пароль:</mat-label>
+                  <input matInput formControlName="password" />
+                  <mat-error
+                    *ngIf="
+                      user.get('password')?.invalid &&
+                      (user.get('password')?.touched ||
+                        user.get('password')?.dirty)
+                    "
+                  >
+                    Пароль обов'язкове поле та має бути в правильному форматі
+                  </mat-error>
+                </mat-form-field>
+
+                <div *ngIf="!user.get('id')?.value">
+                  <mat-form-field>
+                    <mat-label>Підтвердіть пароль:</mat-label>
+                    <input matInput formControlName="confirmPassword" />
+                    <mat-error
+                      *ngIf="
+                        user.get('confirmPassword')?.invalid &&
+                        (user.get('confirmPassword')?.touched ||
+                          user.get('confirmPassword')?.dirty)
+                      "
+                    >
+                      Повторний пароль обов'язкове поле, має бути в правильному
+                      форматі та співпадати з попереднім полем
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <mat-form-field>
+                  <mat-label>Опис:</mat-label>
+                  <textarea matInput formControlName="description"></textarea>
+                </mat-form-field>
+
+                <mat-radio-group formControlName="sex">
+                  <mat-radio-button value="MALE" color="primary"
+                    >Чоловік</mat-radio-button
+                  >
+                  <mat-radio-button value="FEMALE" color="warn"
+                    >Жінка</mat-radio-button
+                  >
+                </mat-radio-group>
+
+                <mat-form-field style="height: 75px">
+                  <mat-label>Номер телефону:</mat-label>
+                  <input matInput formControlName="phone" />
+                  <mat-error
+                    *ngIf="
+                      user.get('phone')?.invalid &&
+                      (user.get('phone')?.touched || user.get('phone')?.dirty)
+                    "
+                  >
+                    Номер телефону має бути в правильному форматі
+                  </mat-error>
+                </mat-form-field>
+
+                <div [formGroup]="getUserSubjects(i)">
+                  <div formArrayName="subjectsArray">
+                    <div
+                      *ngFor="
+                        let subjects of getSubjectArray(i).controls;
+                        let j = index
+                      "
+                    >
+                      <div
+                        [formGroupName]="j"
+                        [fxLayoutGap]="isSmallScreen ? '-10px' : '10px'"
+                        [fxLayout]="isSmallScreen ? 'column' : 'row'"
+                      >
+                        <mat-form-field appearance="fill">
+                          <label for="subjectInput">Новий предмет:</label>
+                          <input
+                            matInput
+                            type="text"
+                            id="subjectInput"
+                            formControlName="subject"
+                          />
+                        </mat-form-field>
+
+                        <button
+                          mat-raised-button
+                          color="warn"
+                          (click)="deleteSubject(i, j)"
+                          type="button"
+                        >
+                          Видалити предмет
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="addSubject(i)"
+                    type="button"
+                    style="margin-top: 10px"
+                  >
+                    Додати предмет
                   </button>
                 </div>
+                <br />
               </div>
             </div>
-            <br />
+          </div>
 
-            <button type="button" (click)="addSubject(i)">
-              Додати предмет
+          <div fxLayoutGap="10px" fxLayout="column">
+            <button
+              type="button"
+              (click)="addUser()"
+              mat-raised-button
+              color="warn"
+            >
+              Нова форма
+            </button>
+            <button
+              type="submit"
+              [disabled]="usersForm.invalid"
+              mat-raised-button
+              color="accent"
+            >
+              Додати юзерів
             </button>
           </div>
-
-          <br />
-
-          <label for="phone">Номер телефону:</label>
-          <input
-            type="tel"
-            id="phone"
-            formControlName="phone"
-            [ngClass]="{
-              'error-input':
-                user.get('phone')?.invalid &&
-                (user.get('phone')?.touched || user.get('phone')?.dirty)
-            }"
-          />
-          <div
-            *ngIf="
-              user.get('phone')?.invalid &&
-              (user.get('phone')?.touched || user.get('phone')?.dirty)
-            "
-            class="error-message"
+        </form>
+      </mat-tab>
+      <mat-tab label="Pets">
+        <mat-chip-listbox>
+          <mat-chip-option
+            *ngFor="let chip of chipItems"
+            [selected]="chip.selected"
+            (click)="selectChip(chip)"
+            color="accent"
+            >{{ chip.label }}</mat-chip-option
           >
-            Номер телефону має бути в правильному форматі
-          </div>
-        </div>
-      </div>
-    </div>
+        </mat-chip-listbox>
+        <mat-divider style="margin: 10px 0"></mat-divider>
 
-    <button type="button" (click)="addUser()">Додати нового юзера</button>
-    <button type="submit" [disabled]="usersForm.invalid">Submit</button>
-  </form>
+        <div *ngIf="selectedChip">
+          <img [src]="images[selectedChip.label]" class="image" />
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </nav>
 </div>

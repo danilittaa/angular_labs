@@ -7,6 +7,7 @@ import {
   ValidationErrors,
   FormGroup,
 } from '@angular/forms';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 interface User {
   id: string;
@@ -22,16 +23,50 @@ interface User {
   phone: string;
 }
 
+interface ChipItem {
+  label: string;
+  selected: boolean;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  //#region
+  selectedChip: ChipItem | null = null;
+
+  chipItems: ChipItem[] = [
+    { label: 'Котик', selected: false },
+    { label: 'Собачка', selected: false },
+    { label: 'Свинка', selected: false },
+  ];
+
+  images: { [key: string]: string } = {
+    Котик: '../assets/images/cat.jpg',
+    Собачка: '../assets/images/dog.webp',
+    Свинка: '../assets/images/pig.jpg',
+  };
+
+  selectChip(chip: ChipItem) {
+    this.selectedChip = chip;
+  }
+  //#endregion
+
   users: User[] = [];
   usersForm = new FormGroup({
     users: new FormArray([this.getUserFields()]),
   });
+  isSmallScreen: boolean = false;
+
+  constructor(private breakpointObserver: BreakpointObserver) {
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall])
+      .subscribe((result) => {
+        this.isSmallScreen = result.matches;
+      });
+  }
 
   generateUniqueId(): string {
     return 'id-' + new Date().getTime();
@@ -71,10 +106,10 @@ export class AppComponent {
           ),
         ]),
         subjects: new FormGroup({
-          subjectsArray: new FormArray([]),
+          subjectsArray: new FormArray([this.getSubjectFields()]),
         }),
         description: new FormControl(''),
-        sex: new FormControl(''),
+        sex: new FormControl('MALE'),
         phone: new FormControl('', Validators.pattern(/^\+380\d{9}$/)),
       },
       { validators: this.passwordMatchValidator }
@@ -109,8 +144,6 @@ export class AppComponent {
 
   addSubject(index: number) {
     const subjectsArray = this.getSubjectArray(index);
-    console.log('tut', subjectsArray);
-
     subjectsArray.push(this.getSubjectFields());
   }
 

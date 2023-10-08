@@ -1,25 +1,22 @@
 .container {
-  display: flex;
-  justify-content: center;
-
+  margin: 20px 30px;
   .form {
     background-color: rgb(214, 221, 221);
     padding: 20px 30px;
     border-radius: 20px;
-    display: flex;
-    margin: 0 30px;
-  }
-  .error-input {
-    border-color: red;
-  }
+    margin: 20px 0;
 
-  .error-message {
-    color: red;
-    width: 160px;
-  }
+    .close-btn {
+      position: absolute;
+      top: -10px;
+      right: -45px;
+    }
 
-  label {
-    display: block;
-    margin-top: 7px;
+    .subjects {
+      background-color: rgb(232, 236, 239);
+    }
+  }
+  .image {
+    width: 100%;
   }
 }
